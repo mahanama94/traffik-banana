@@ -3,6 +3,7 @@
 import cv2
 import numpy as np
 import os
+import time
 
 import DetectChars
 import DetectPlates
@@ -152,12 +153,38 @@ def capture():
     os.system('./capture.sh')
 
 
+def delete(file):
+
+    os.system('rm '+ file)
+
+
 
 ###################################################################################################
 if __name__ == "__main__":
-    for i in range(1, 37):
-        print(i)
-        recognize("images/car_"+str(i)+".jpg")
+    #for i in range(1, 37):
+    #     print(i)
+    #     recognize("images/car_"+str(i)+".jpg")
+
+    settings()
+
+
+    while True:
+        capture()
+
+        numberPlate = recognize('00000002.jpg')
+
+        print(numberPlate)
+
+        time.sleep(2)
+
+        #delete('00000002.jpg')
+
+        #delete('00000001.jpg')
+
+        char = input()
+
+        cv2.destroyAllWindows()
+
 
 
 
