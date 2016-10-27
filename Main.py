@@ -56,6 +56,7 @@ def recognize(image):
 
     if len(listOfPossiblePlates) == 0:                          # if no plates were found
         print("\nno license plates were detected\n")            # inform user no plates were found
+        return str(-1)
     else:                                                       # else
                 # if we get in here list of possible plates has at leat one plate
 
@@ -69,14 +70,14 @@ def recognize(image):
         #cv2.imshow("imgThresh", licPlate.imgThresh)
 
         if len(licPlate.strChars) == 0:                     # if no chars were found in the plate
-            print("\nno characters were detected\n\n")       # show message
-            return                                          # and exit program
+            #print("\nno characters were detected\n\n")       # show message
+            return str(-1)                                       # and exit program
         # end if
 
         drawRedRectangleAroundPlate(imgOriginalScene, licPlate)             # draw red rectangle around plate
 
-        print("\nlicense plate read from image = " + licPlate.strChars + "\n")      # write license plate text to std out
-        print("----------------------------------------")
+        # print("\nlicense plate read from image = " + licPlate.strChars + "\n")      # write license plate text to std out
+        # print("----------------------------------------")
 
         writeLicensePlateCharsOnImage(imgOriginalScene, licPlate)           # write license plate text on the image
 
@@ -88,7 +89,7 @@ def recognize(image):
 
         cv2.waitKey(0)					# hold windows open until user presses a key
 
-    return
+    return licPlate.strChars
 # end main
 
 ###################################################################################################
@@ -155,9 +156,9 @@ def capture():
 
 ###################################################################################################
 if __name__ == "__main__":
-    for i in range(1, 37):
+    for i in range(1, 35):
         print(i)
-        recognize("images/car_"+str(i)+".jpg")
+        print(recognize("images/car_"+str(i)+".jpg"))
 
 
 
