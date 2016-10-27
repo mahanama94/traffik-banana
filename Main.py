@@ -57,6 +57,7 @@ def recognize(image):
 
     if len(listOfPossiblePlates) == 0:                          # if no plates were found
         print("\nno license plates were detected\n")            # inform user no plates were found
+        return None
     else:                                                       # else
                 # if we get in here list of possible plates has at leat one plate
 
@@ -81,15 +82,18 @@ def recognize(image):
 
         writeLicensePlateCharsOnImage(imgOriginalScene, licPlate)           # write license plate text on the image
 
+        ##############
+
+
         cv2.imshow("imgOriginalScene", imgOriginalScene)                # re-show scene image
 
-        cv2.imwrite("imgOriginalScene.png", imgOriginalScene)           # write image out to file
+        #cv2.imwrite("imgOriginalScene.png", imgOriginalScene)           # write image out to file
 
         # end if else
 
-        cv2.waitKey(0)					# hold windows open until user presses a key
+        #cv2.waitKey(0)					# hold windows open until user presses a key
 
-    return
+    return licPlate.strChars
 # end main
 
 ###################################################################################################
@@ -168,22 +172,33 @@ if __name__ == "__main__":
     settings()
 
 
-    while True:
+    condition = True
+
+    while condition:
+
+        startTime = time.time()
+
         capture()
 
         numberPlate = recognize('00000002.jpg')
 
+        print_time = time.time() - startTime
+
+        with open("test.txt", "a") as f:
+            f.write(str(numberPlate)+ '\t')
+            f.write(str(print_time))
+            f.write('\n =========================================================================== \n')
+
         print(numberPlate)
 
-        time.sleep(2)
 
         #delete('00000002.jpg')
 
         #delete('00000001.jpg')
 
-        char = input()
+        #char = input()
 
-        cv2.destroyAllWindows()
+
 
 
 
